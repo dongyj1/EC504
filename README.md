@@ -1,7 +1,7 @@
 # EC504
 
 To implement ford_fulkerson.java:
-First add some pgm images to the same path with ford_fulkerson.java as sourcefile, then run:
+First find some pgm image to feed to the ford_fulkerson algorithm as sourcefile, run:
 
 $javac ford_fulkerson.java
 
