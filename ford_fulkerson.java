@@ -12,7 +12,9 @@ public class ford_fulkerson
     //long start = System.currentTimeMillis();
     public static void main(String[] args) 
     {
-        
+    	args = new String[2];
+        args[0] = "DAISY_30.pgm";
+        args[1] = "output_DAISY_30.pgm";
         int[][] graph = null;
         String fileName = args[0];
         if(fileName.substring(fileName.length()-3).equalsIgnoreCase("pgm"))
@@ -27,6 +29,13 @@ public class ford_fulkerson
             edge_matrix(pgm, graph, length, width, max);
             //ImageSegmentation.createAdjMatrix(pgm, graph, length, width, max);
             System.out.println("Max flow = " + fordFulkerson(graph)); 
+            for (int i = 0; i < total; i++) {
+                for (int j = 0; j < total; j++) {
+                	System.out.print(graph[i][j]);
+                	System.out.print(" ");
+                }
+                System.out.print("\n");
+            }
             fileName = args[1];
             write(fileName, length, width, max, graph, pgm);
         }
@@ -36,7 +45,7 @@ public class ford_fulkerson
         }
     }
 
-    private static int[][] read(String filename, int[] config)
+    public static int[][] read(String filename, int[] config)
     {
         //long start = System.currentTimeMillis();
  
@@ -103,7 +112,7 @@ public class ford_fulkerson
         return pgm;       
     }
 
-    private static void edge_matrix(int[][] pgm, int[][] edgs, int length, int width, int max)
+    public static void edge_matrix(int[][] pgm, int[][] edgs, int length, int width, int max)
     {
         //long start = System.currentTimeMillis();
         int node = 1;
@@ -113,20 +122,20 @@ public class ford_fulkerson
                 sum += pgm[i][j];
                 if(j < length-1)
                 {
-                	edgs[node][node + 1] = (Math.abs(pgm[i][j] - pgm[i][j+1]))/scale;   
+                	edgs[node][node + 1] = (max - Math.abs(pgm[i][j] - pgm[i][j+1]))/scale;   
                 }
                 if(j > 0)
                 {
-                    edgs[node][node - 1] = (Math.abs(pgm[i][j] - pgm[i][j-1]))/scale;               
+                    edgs[node][node - 1] = (max - Math.abs(pgm[i][j] - pgm[i][j-1]))/scale;               
   
                 }
                 if((i < width -1 ))
                 {
-                	edgs[node][node + length] = ( Math.abs(pgm[i][j] - pgm[i+1][j]))/scale; 
+                	edgs[node][node + length] = (max - Math.abs(pgm[i][j] - pgm[i+1][j]))/scale; 
                 }
                 if((i > 0 ))
                 {
-                    edgs[node][node - length] = (Math.abs(pgm[i][j] - pgm[i-1][j]))/scale;
+                    edgs[node][node - length] = (max - Math.abs(pgm[i][j] - pgm[i-1][j]))/scale;
 
                 }
                 node++;           
@@ -152,8 +161,9 @@ public class ford_fulkerson
          }
     }
    
-    private static void write(String outFile, int length, int width, int max, int[][]data, int [][]org)
+    public static void write(String outFile, int length, int width, int max, int[][]data, int [][]org)
     {   
+    	System.out.println("Start writing " + outFile);
         long start = System.currentTimeMillis();
     
         //get the src and sink
