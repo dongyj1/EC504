@@ -271,7 +271,7 @@ public class markov_random_field_opt {
               String[] line_content = null;
               line_content = m.replaceAll(" ").split(" ");
               //System.out.println(m.replaceAll(" "));
-              if(config[0]==0 && config[1]==0 && line_content.length == 2 && !line_content[0].trim().equals("#"))
+              if(config[0]==0 && config[1]==0 && line_content.length >= 2 && !line_content[0].trim().equals("#"))
               {
             	  
               	config[0] = Integer.parseInt(line_content[0].trim());
@@ -280,12 +280,12 @@ public class markov_random_field_opt {
               	System.out.println(config[1]);
                 pgm = new int[config[1]][config[0]];
               }
-             else if(config[2]==0 && line_content.length ==1 && line_index>=3)
+             else if(config[2]==0 && line_content.length ==1 && line_index>=2)
              {
               	config[2] = Integer.parseInt(line_content[0].trim());
               	System.out.println(config[2]);
              }
-             else
+             else if(line_index>3)
               {
                   for(int i = 0; i < line_content.length; i++)
                    {
@@ -369,7 +369,7 @@ public class markov_random_field_opt {
         width = config[0];
         length = config[1];
         max = config[2];
-        //write_pgm("lena1.pgm", pgm);
+        write_pgm("temp/" + args[0], pgm);
         System.out.println("lenth:"+Integer.toString(length) + " width:" + Integer.toString(width) + " max:" + Integer.toString(max));
         int total = length * width + labels.length;
         int[][] nlink = new int[length*width][4];
