@@ -10,7 +10,7 @@ import java.util.*;
 
 public class dinic {
   private static final int src_over_snk = 4;
-  private static final int scale = 2;
+  private static final int scale = 4;
   private static final int src = 0;
   static class Edge {
     int t, rev, cap, f;
@@ -49,19 +49,19 @@ public class dinic {
   static boolean dinicBfs(List<Edge>[] graph, int src, int dest, int[] dist) {
     Arrays.fill(dist, -1);
     dist[src] = 0;
-    int[] Q = new int[graph.length];
+    int[] Q = new int[graph.length]; //a queue to store the searched
     int sizeQ = 0;
-    Q[sizeQ++] = src;
+    Q[sizeQ++] = src; // add source to the queue
     for (int i = 0; i < sizeQ; i++) {
-      int u = Q[i];
-      for (Edge e : graph[u]) {
-        if (dist[e.t] < 0 && e.f < e.cap) {
-          dist[e.t] = dist[u] + 1;
-          Q[sizeQ++] = e.t;
+      int u = Q[i]; //start from the last node which has been searched
+      for (Edge e : graph[u]) { //edge e from node u
+        if (dist[e.t] < 0 && e.f < e.cap) {  //e's target hasn't been visited, then set to be u's next
+          dist[e.t] = dist[u] + 1; //distance of the target from source is 1 unit further than u
+          Q[sizeQ++] = e.t; // add this searched target to the queue
         }
       }
     }
-    return dist[dest] >= 0;
+    return dist[dest] >= 0; //check if there is a path from source to sink
   }
 
   static int dinicDfs(List<Edge>[] graph, int[] ptr, int[] dist, int dest, int u, int f) {
@@ -69,7 +69,7 @@ public class dinic {
       return f;
     for (; ptr[u] < graph[u].size(); ++ptr[u]) {
       Edge e = graph[u].get(ptr[u]);
-      if (dist[e.t] == dist[u] + 1 && e.f < e.cap) {
+      if (dist[e.t] == dist[u] + 1 && e.f < e.cap) {  //don't need to be the nodes in the BFS queue, it's OK if it's neighbor and the distance is 1 unit further
         int df = dinicDfs(graph, ptr, dist, dest, e.t, Math.min(f, e.cap - e.f));
         if (df > 0) {
           e.f += df;
@@ -233,7 +233,8 @@ public class dinic {
           {
       	   if(i!= 1 && i%(length) == 0)	buffer.write("\n");
              if(data[i] == 0)	buffer.write("0 ");
-             else buffer.write(org[i/length][i%length] + " ");
+             else buffer.write(max + " ");
+             //else buffer.write(org[i/length][i%length] + " ");
              //else if(data[snk][i] != 0)	buffer.write(org[i/length][i%length] + " ");
              //else	System.out.println("Missing Data = " + i);
            }
@@ -289,7 +290,7 @@ public class dinic {
 
         fileName = args[1];  
         System.out.println("Ready for writing");
-        write("Dinic.pgm", length, width, max, graph_out, pgm);
+        write("Dinic2.pgm", length, width, max, graph_out, pgm);
  //       System.out.println("Ford Fulkerson Max flow = " + ford_fulkerson.fordFulkerson(graph_mat)); 
  //       fileName = args[1];
  //       ford_fulkerson.write(fileName, length, width, max, graph_mat, pgm);

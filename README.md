@@ -7,10 +7,3 @@ $javac ford_fulkerson.java
 
 $java ford_fulkerson sourcefile outputfile
 
-or try 
-
-dinic.java, 
-
-or push_relabel.java
-
-others are just garbages.
