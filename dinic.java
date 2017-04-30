@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class dinic {
@@ -111,38 +113,37 @@ public class dinic {
           BufferedReader buffer = new BufferedReader(reader);  
           String line = buffer.readLine();
           while(line != null){
+        	  Matcher m = Pattern.compile("\\s+|\t|\\s").matcher(line);
               String[] line_content = null;
-              if(line_index == 3) {
-                line_content = line.split(" ");
-              }
-              else{
-                line_content = line.split("\t");
-              }
-              if(line_index ==  3 && line_content.length >= 2)
+              line_content = m.replaceAll(" ").split(" ");
+              //System.out.println(m.replaceAll(" "));
+              if(config[0]==0 && config[1]==0 && line_content.length == 2)
               {
+            	  
               	config[0] = Integer.parseInt(line_content[0].trim());
               	config[1] = Integer.parseInt(line_content[1].trim());
-                  pgm = new int[config[1]][config[0]];
+                pgm = new int[config[1]][config[0]];
               }
-             else if(line_index == 4 && line_content.length > 0)
+             else if(config[2]==0 && line_content.length ==1 && line_index>=3)
              {
               	config[2] = Integer.parseInt(line_content[0].trim());
              }
-              else if(line_index > 4)
-             {
-                 for(int i = 0; i < line_content.length; i++)
-                  {
-                     if(col >= config[0])
-                      {
-                          col = 0;
-                          row++;
-                      }
-                     if(col < config[0] && row < config[1]){
-                         pgm[row][col] = Integer.parseInt(line_content[i].trim());
-                      }
-                     col++;
-                  }
-              } 
+             else
+              {
+                  for(int i = 0; i < line_content.length; i++)
+                   {
+                      if(col >= config[0])
+                       {
+                           col = 0;
+                           row++;
+                       }
+                      if(col < config[0] && row < config[1]){
+                          pgm[row][col] = Integer.parseInt(line_content[i].trim());
+                       }
+                      col++;
+                   }
+               } 
+ 
              line = buffer.readLine();
              line_index++;
          }
