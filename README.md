@@ -1,6 +1,6 @@
 # EC504
 
-Find all the java source files are in src/
+Find all the java source files in src/
 
 Find all the pgm files in images/
 
