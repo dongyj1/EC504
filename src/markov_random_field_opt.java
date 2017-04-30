@@ -15,7 +15,7 @@ public class markov_random_field_opt {
   private static final int src_over_snk = 4;
   private static final int scale = 8;
   //private static final int [] labels = {0, 40, 60, 90, 160, 200, 220,  255};
-  private static final int [] labels = {0, 40, 180, 220,120, 80, 200, 255};
+  private static final int [] labels = {0, 20, 60, 100, 180, 220,120, 200, 255};
   private static int length = 0, width = 0, max = 0;
   private static int src = 0;
   private static int snk = 0;
@@ -355,8 +355,10 @@ public class markov_random_field_opt {
    
     
     long start = System.currentTimeMillis();
-    args = new String[2];
-    args[0] =  "barbara.ascii.pgm";
+    if(args.length==0) {
+    	args = new String[1];
+    	args[0] =  "saturn.ascii.pgm";
+    }
     int[][] graph_mat = null;
     String fileName = "images/"+args[0];
     if(fileName.substring(fileName.length()-3).equalsIgnoreCase("pgm"))
@@ -385,7 +387,8 @@ public class markov_random_field_opt {
         long end = System.currentTimeMillis();
         System.out.print(end-start);
         System.out.println("ms");
-        fileName = "images/" + "output_"+args[0];  
+        if(args.length <2) fileName = "images/" + "output_"+args[0]; 
+        else fileName = "images/" + args[1];
         System.out.println("Ready for writing");
         write(fileName, par);
  //       System.out.println("Ford Fulkerson Max flow = " + ford_fulkerson.fordFulkerson(graph_mat)); 
