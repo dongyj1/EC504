@@ -7,3 +7,7 @@ $javac ford_fulkerson.java
 
 $java ford_fulkerson sourcefile outputfile
 
+For multi-label image segamentation:
+
+use $markov_random_field_opt.java sourcefile.
+
