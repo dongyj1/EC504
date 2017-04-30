@@ -1,5 +1,4 @@
 package src;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
@@ -204,18 +203,18 @@ public class markov_random_field_opt {
 		  int flow = dinic.maxFlow(graph, 0, graph.length-1);
 		  System.out.print("flow of the sub partition: "); System.out.println(flow);
 		  int [] par_temp = new int[par.length];
-		  for(int e=0; e<par.length; e++) par_temp[e]=par[e];
+		  for(int e = 0; e<par.length; e++) par_temp[e]= par[e];
+		 
 		  recut(graph, par_temp, src, snk);
 		  int new_cost = cost(nlink, tlink, par_temp);
 		  diff = cost - new_cost;
+		  
 		  System.out.print("new partition cost is "); System.out.println(new_cost); 
 		  System.out.print("cost down "); System.out.println(diff); 
 		  if(diff>0) {
-			  for(int e=0; e<par.length; e++) par_temp[e]=par[e];
 			  cost = new_cost; 
+			  for(int e = 0; e<par.length; e++) par[e]= par_temp[e];
 			  write("temp/"+(iter_max)+".pgm", par);
-		  } else {
-			  System.out.println("no cost down, ignore this cut");
 		  }
 		  iter_max--;
 	  }
@@ -356,10 +355,8 @@ public class markov_random_field_opt {
    
     
     long start = System.currentTimeMillis();
-    if(args.length == 0) {
-    	args = new String[2];
-    	args[0] =  "balloons_noisy.ascii.pgm";
-    }
+    args = new String[2];
+    args[0] =  "barbara.ascii.pgm";
     int[][] graph_mat = null;
     String fileName = "images/"+args[0];
     if(fileName.substring(fileName.length()-3).equalsIgnoreCase("pgm"))
