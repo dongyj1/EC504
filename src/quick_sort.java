@@ -1,3 +1,4 @@
+package src;
 class quick_sort
 {
     /* This function takes last element as pivot,
