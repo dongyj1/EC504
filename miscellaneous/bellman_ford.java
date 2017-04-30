@@ -1,3 +1,4 @@
+package miscellaneous;
 import java.util.*;
 
 public class bellman_ford {

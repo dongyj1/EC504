@@ -1,3 +1,4 @@
+package miscellaneous;
 import java.util.*;
 
 public class edmonds_karp {
