@@ -1,13 +1,13 @@
-##EC504 Project
-#Image Segmentation
+## EC504 Project
+# Image Segmentation
 
 
-#Project description
+# Project description
  
 This is project is to use Network flow to segment an image from foreground to background. 
 
 
-#User Instructions
+# User Instructions
 
 Find all the java source files in src/
 
