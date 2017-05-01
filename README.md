@@ -1,11 +1,8 @@
-# EC504 Project
-## Image Segmentation
-
+# EC504 Project:Image Segmentation using Network Flow
 
 ## Project description
  
 This is project is to use Network flow to segment an image from foreground to background. 
-
 
 ## User Instructions
 
