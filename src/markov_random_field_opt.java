@@ -13,12 +13,14 @@ import java.util.regex.Pattern;
 
 public class markov_random_field_opt {
   private static final int src_over_snk = 4;
-  private static final int scale = 8;
-  //private static final int [] labels = {0, 40, 60, 90, 160, 200, 220,  255};
-  private static final int [] labels = {0, 20, 60, 100, 180, 220,120, 200, 255};
+  private static final int scale = 1;
+ 
+  //private static final int [] labels = {0, 255};
   private static int length = 0, width = 0, max = 0;
   private static int src = 0;
   private static int snk = 0;
+  private static int iter_max = 40;
+  private static int [] labels = {0, 40, 60, 90, 160, 200, 220,  255};
 
  
 
@@ -174,11 +176,12 @@ public class markov_random_field_opt {
   public static void mincut(int[][] nlink, int[][] tlink, int [] par) {
 	  System.out.println("mincut");
 	  int diff = Integer.MAX_VALUE;
-	  int iter_max = 40;
+	  int iter = 1;
 	  int cost = cost(nlink, tlink, par);
 	  System.out.print("Initial partition cost is "); System.out.println(cost); 
-	  while(Math.abs(diff) > 10 || iter_max>=0) {
-		  System.out.print("iteration "); System.out.println(iter_max);
+	  //while(Math.abs(diff) > 1000000 || iter<=iter_max) {
+	  while(iter<=iter_max) {
+		  System.out.print("iteration "); System.out.println(iter);
 		  int i, j;
 		  do{
 			  i = (int)(Math.random() * (double)labels.length);
@@ -214,9 +217,9 @@ public class markov_random_field_opt {
 		  if(diff>0) {
 			  cost = new_cost; 
 			  for(int e = 0; e<par.length; e++) par[e]= par_temp[e];
-			  write("temp/"+(iter_max)+".pgm", par);
+			  write("temp/"+(iter)+".pgm", par);
 		  }
-		  iter_max--;
+		  iter++;
 	  }
 	  System.out.println("holy");
 	 
@@ -352,8 +355,27 @@ public class markov_random_field_opt {
   
   // Usage example
   public static void main(String[] args) {
+	  mrf(args);
+  }
+  public static String segk(String[] args) {
+	  labels = new int[8];
+	 
+	  int [] labels_temp = {0, 40, 60, 90, 160, 200, 220,  255};
+	  for(int i = 0; i<8; i++) labels[i] = 30*i;
+	  iter_max = 40;
+	  return mrf(args);
+  }
+   public static String seg2(String[] args) {
+	  labels = new int[2];
+	  labels[0]=0;
+	  labels[1]= 225;
+	  iter_max = 1;
+	  return mrf(args);
+	  
+  }
    
-    
+  public static String mrf(String[] args) {
+	System.out.print(labels.length); System.out.println(" labels segmentation");
     long start = System.currentTimeMillis();
     if(args.length==0) {
     	args = new String[1];
@@ -382,8 +404,6 @@ public class markov_random_field_opt {
         
         mincut(nlink, tlink, par);
         
-        
-        
         long end = System.currentTimeMillis();
         System.out.print(end-start);
         System.out.println("ms");
@@ -391,6 +411,7 @@ public class markov_random_field_opt {
         else fileName = "images/" + args[1];
         System.out.println("Ready for writing");
         write(fileName, par);
+        
  //       System.out.println("Ford Fulkerson Max flow = " + ford_fulkerson.fordFulkerson(graph_mat)); 
  //       fileName = args[1];
  //       ford_fulkerson.write(fileName, length, width, max, graph_mat, pgm);
@@ -399,5 +420,6 @@ public class markov_random_field_opt {
     {
         System.out.println("Please provide a .pgm file");
     }
+    return fileName;
   }
 }

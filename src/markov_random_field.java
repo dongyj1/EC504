@@ -259,8 +259,10 @@ public class markov_random_field {
   
   // Usage example
   public static void main(String[] args) {
+	  mrf(args);
+  }
    
-    
+  public static void mrf(String [] args) {
     long start = System.currentTimeMillis();
     args = new String[2];
     args[0] = "IMG_2208.pgm";
