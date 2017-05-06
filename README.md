@@ -9,7 +9,7 @@ This is project is to use Network flow to segment an image from foreground to ba
 git clone https://github.com/zwc662/EC504
 
 ### Image segmentation with k-means algorithm
-jupyter notebook kmeans_seg.ipynb and follow the instructions inside to segment images with kmeans algorithm and experience the UI.
+Run $jupyter notebook kmeans_seg.ipynb and follow the instructions inside to segment images with kmeans algorithm and experience the UI.
 
 Anaconda environment is recommendated, or you may result in errors when running the program.
 
